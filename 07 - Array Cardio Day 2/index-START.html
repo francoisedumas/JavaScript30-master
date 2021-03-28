@@ -26,15 +26,49 @@
 
     // Some and Every Checks
     // Array.prototype.some() // is at least one person 19 or older?
+    function checkAdult(individual) {
+      return ((new Date().getFullYear() - individual.year) >= 19 );
+      }
+
+    console.log(people.some(checkAdult));
     // Array.prototype.every() // is everyone 19 or older?
 
+    function checkNineteen(individual) {
+      return ((new Date().getFullYear() - individual.year) >= 19 );
+      }
+
+    console.log(people.every(checkNineteen));
     // Array.prototype.find()
     // Find is like filter, but instead returns just the one you are looking for
     // find the comment with the ID of 823423
 
+    // function findId(comment) {
+    //   return (comment.id === 823423 );
+    //   }
+
+    // console.log(comments.find(findId));
+
+    const comment = comments.find(comment => comment.id === 823423);
+    console.log(comment)
     // Array.prototype.findIndex()
     // Find the comment with this ID
     // delete the comment with the ID of 823423
+
+    const index = comments.findIndex(comment => comment.id === 823423);
+    console.log(index);
+
+    // here we create a new array without the comment
+    const newComments = [
+      ...comments.slice(0, index), // the ... is to spread the table
+      ...comments.slice(index + 1)
+    ];
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+    console.table(newComments);
+
+
+    // here we completely destroy the comment
+    comments.splice(index, 1);
+    console.table(comments);
 
   </script>
 </body>
