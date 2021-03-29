@@ -95,7 +95,43 @@
     </div>
   </div>
 
-<script>
-</script>
+  <script>
+
+    // get the checkbox element thanks to the class .item and input
+    checkboxes = document.querySelectorAll('.item input[type ="checkbox"]');
+    // console.log(checkboxes);
+
+    let lastChecked;
+
+    function handleCheck(event) {
+
+      let inBetween = false;
+
+      // to detect shift key down we use shiftKey on the event
+      if (event.shiftKey && this.checked) {
+        // here user has checked a box and pressed shift
+        // loop over every single checkbox
+        checkboxes.forEach(checkbox => {
+          // console.log(checkbox);
+          if (checkbox === this || checkbox === lastChecked) {
+            inBetween = !inBetween;
+            console.log('the previous element was the checked or last box');
+          }
+
+          if (inBetween) {
+            checkbox.checked = true;
+          }
+        });
+      }
+
+      lastChecked = this; // get the last input checked
+      console.log(lastChecked);
+    }
+
+    checkboxes.forEach(checkbox => checkbox.addEventListener(
+      'click',handleCheck));
+
+
+  </script>
 </body>
 </html>
