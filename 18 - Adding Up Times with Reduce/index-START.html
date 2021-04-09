@@ -182,6 +182,34 @@
     </li>
   </ul>
 <script>
+  // CAREFULLLLLLL!!!!!! here we initially have a node list not an array!
+  // turning node list into array with spreading [...myNodeList]
+  const timeAll = [...document.querySelectorAll('[data-time]')];
+  // console.log(timeAll);
+  // getting individual time
+  timeArray = timeAll.map(item => item.dataset.time);
+  // console.log(timeArray);
+  function stringToTime(string){
+    const a = string.split(':');
+    return (+a[0]) * 60 + (+a[1])
+  }
+  // parsing time
+  const secondArray = timeArray.map(timePerVideo => stringToTime(timePerVideo))
+  // reducing time
+  const totalTime = secondArray.reduce((total, second) => {
+      return total + second;
+    }, 0);
+  // console.log(totalTime);
+  // converting to hours / minutes / seconds
+  let secondsLeft = totalTime;
+  const hours = Math.floor(secondsLeft / 3600);
+  secondsLeft = secondsLeft % 3600;
+
+  const mins = Math.floor(secondsLeft / 60);
+  secondsLeft = secondsLeft % 60;
+
+  console.log(hours, mins, secondsLeft);
+
 </script>
 </body>
 </html>
