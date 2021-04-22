@@ -79,11 +79,11 @@
     box-sizing: border-box;
     font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
   }
-  
+
   *, *:before, *:after {
     box-sizing: inherit;
   }
-  
+
   body {
     margin: 0;
     min-height: 100vh;
@@ -149,7 +149,7 @@
   .trigger-enter-active .dropdown {
     opacity: 1;
   }
-  
+
   .dropdownBackground {
     width: 100px;
     height: 100px;
@@ -220,6 +220,44 @@
 </style>
 
 <script>
+  const nav = document.querySelector('.top');
+  const background = document.querySelector('.dropdownBackground');
+  const triggers = document.querySelectorAll('.cool > li');
+
+  function handleEnter() {
+    // console.log('Enter!!');
+    this.classList.add('trigger-enter');
+    setTimeout(() => {
+      if(this.classList.contains('trigger-enter')) {
+        this.classList.add('trigger-enter-active')
+        }
+      }, 150);
+    background.classList.add('open');
+
+    const dropdown = this.querySelector('.dropdown');
+    const dropdownCoords = dropdown.getBoundingClientRect();
+    const navCoords = nav.getBoundingClientRect();
+    // console.log(dropdownCoords);
+
+    const coords = {
+      width: dropdownCoords.width,
+      height: dropdownCoords.height,
+      top: dropdownCoords.top - navCoords.top,
+      left: dropdownCoords.left - navCoords.left
+    }
+
+    background.style.setProperty('width', `${coords.width}px`)
+    background.style.setProperty('height', `${coords.height}px`)
+    background.style.setProperty('transform',`translate(${coords.left}px, ${coords.top}px)`)
+  }
+  function handleLeave() {
+    // console.log('Leave!!');
+    this.classList.remove('trigger-enter', 'trigger-enter-active');
+    background.classList.remove('open');
+  }
+
+  triggers.forEach( trigger => trigger.addEventListener('mouseenter', handleEnter))
+  triggers.forEach( trigger => trigger.addEventListener('mouseleave', handleLeave))
 </script>
 
 </body>
